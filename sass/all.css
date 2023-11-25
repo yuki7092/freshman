@@ -274,7 +274,7 @@ nav .navbar li:first-child > a {
   color: #c30e24;
 }
 nav .navbar .logo {
-  background-image: url("../../assets/logo.png");
+  background-image: url("../assets/logo.png");
   background-position: center center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -520,7 +520,7 @@ nav .nav-box #menu:checked ~ .menu-list {
 }
 
 .banner {
-  background-image: url("../../assets/banner.jpg");
+  background-image: url("../assets/banner.jpg");
   background-position: center center;
   background-size: cover;
   width: 100%;
@@ -830,7 +830,7 @@ nav .nav-box #menu:checked ~ .menu-list {
 }
 .index .products {
   padding: 80px 0;
-  background-image: url("../../assets/bg.jpg");
+  background-image: url("../assets/bg.jpg");
   width: 100%;
 }
 .index .products h3 {
@@ -1005,7 +1005,7 @@ nav .nav-box #menu:checked ~ .menu-list {
   transform: scale(1.2);
   opacity: 0;
   transition: 1s ease;
-  background-image: url("../../assets/about.jpg");
+  background-image: url("../assets/about.jpg");
   background-position: center center;
   background-size: cover;
   height: 520px;
