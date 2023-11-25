@@ -1,0 +1,27 @@
+* {
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+a {
+  text-decoration: none;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1360px;
+
+  @media screen and (max-width: 1360px) {
+    padding: 0 20px;
+  }
+}
+
+///// color /////
+$color-grey: #555;
+$color-lightgrey: #8b8b8b;
+$color-whitegrey: #e6e6e6;
+$color-lightergrey: #c2c2c2;
+$color-black: #393939;
+$color-red: #c30e24;
+
+$ff-eng: serif;
+$fw-eng: 500;
