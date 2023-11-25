@@ -1,5 +1,13 @@
 $(function () {
-  const screenWidth = $(window).width();
+  function checkWidthAndApplyLogic() {
+    var currentWidth = $(window).width();
+    if (currentWidth > 1180) {
+      $("nav").addClass("fadeIn");
+    } else {
+      $("nav").removeClass("fadeIn");
+    }
+  }
+  checkWidthAndApplyLogic();
 
   ///// enter animation /////
   $(".enter-animation").addClass("animation-fadeOut");
@@ -8,10 +16,6 @@ $(function () {
     $(this).addClass("fadeIn");
   });
 
-  if (screenWidth > 1180) {
-    $("nav").addClass("fadeIn");
-  }
-
   $("#menu").click(() => {
     $("body").toggleClass("no-scroll");
   });
@@ -19,9 +23,7 @@ $(function () {
   /////window Width /////
 
   $(window).resize(() => {
-    if (screenWidth > 1180) {
-      $("nav").addClass("fadeIn");
-    }
+    checkWidthAndApplyLogic();
   });
 
   ///// slide /////
