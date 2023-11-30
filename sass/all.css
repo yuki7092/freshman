@@ -791,11 +791,6 @@ nav .nav-box #menu:checked ~ .menu-list {
     bottom: 95px;
   }
 }
-@media screen and (max-width: 768px) {
-  .banner .banner-content .banner-scrollDown {
-    bottom: 110px;
-  }
-}
 .banner .banner-content .banner-scrollDown p {
   padding: 5px;
   text-align: center;
