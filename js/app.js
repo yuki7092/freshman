@@ -49,23 +49,32 @@ $(function () {
     }
   }
 
-  function calculateSlideDistance() {
-    const visibleLiCount = calculateVisibleLiCount();
-    return liWidth * visibleLiCount;
-  }
+  // function calculateSlideDistance() {
+  //   const visibleLiCount = calculateVisibleLiCount();
+  //   return liWidth * visibleLiCount;
+  // }
 
-  setInterval(() => {
-    const slideDistance = calculateSlideDistance();
+  const visibleLiCount = calculateVisibleLiCount();
+
+  const sliderRun = setInterval(() => {
     const totalLiCount = $slider.find("li").length;
-    const totalSlideCount = Math.ceil(totalLiCount / calculateVisibleLiCount());
+    const visibleLiCount = calculateVisibleLiCount();
+    const totalSlideCount = Math.ceil(totalLiCount / visibleLiCount);
 
     currentSlideIndex = (currentSlideIndex + 1) % totalSlideCount;
-    const newScrollLeft = slideDistance * currentSlideIndex;
+    let newScrollLeft = liWidth * visibleLiCount * currentSlideIndex;
+
+    // 確保 newScrollLeft 不超過輪播的最大範圍
+    const maxScrollLeft = liWidth * (totalLiCount - visibleLiCount);
+    if (newScrollLeft > maxScrollLeft) {
+      newScrollLeft = maxScrollLeft;
+    }
 
     $slider.animate({ scrollLeft: newScrollLeft }, 1000);
   }, 5000);
 
   $slider.mousedown(function (e) {
+    clearInterval(sliderRun);
     isDragging = true;
     dragged = false;
     startX = e.pageX - $(this).offset().left;
@@ -83,28 +92,19 @@ $(function () {
     let newScrollLeft = $slider.scrollLeft();
     const scrollDistance = newScrollLeft - scrollLeft;
     const liCount = Math.round(scrollDistance / liWidth);
+
     newScrollLeft = scrollLeft + liCount * liWidth;
-    const totalLiWidth = liWidth * $slider.find("li").length;
-    if (newScrollLeft >= totalLiWidth) {
+    const maxScrollLeft =
+      liWidth * ($slider.find("li").length - visibleLiCount);
+
+    // 確保 newScrollLeft 在合理範圍內
+    if (newScrollLeft > maxScrollLeft) {
+      newScrollLeft = maxScrollLeft;
+    } else if (newScrollLeft < 0) {
       newScrollLeft = 0;
-    } else if (newScrollLeft <= 0) {
-      newScrollLeft = totalLiWidth - liWidth;
     }
 
     $slider.animate({ scrollLeft: newScrollLeft }, 250);
-  });
-
-  $slider.mousemove(function (e) {
-    if (!isDragging) return;
-
-    e.preventDefault();
-    let x = e.pageX - $slider.offset().left;
-    let speed = (x - startX) * 2;
-    $slider.scrollLeft(scrollLeft - speed);
-
-    if (Math.abs(x - startX) > 5) {
-      dragged = true;
-    }
   });
 
   $(document).mousemove(function (e) {
@@ -124,6 +124,50 @@ $(function () {
     if (dragged) {
       e.preventDefault();
     }
+  });
+
+  //--- mobile slider ---//
+  $slider.on("touchstart", function (e) {
+    clearInterval(sliderRun);
+    isDragging = true;
+    dragged = false;
+    startX = e.touches[0].pageX - $(this).offset().left;
+    scrollLeft = $(this).scrollLeft();
+  });
+  $slider.on("touchmove", function (e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    let x = e.touches[0].pageX - $slider.offset().left;
+    let speed = (x - startX) * 2;
+    $slider.scrollLeft(scrollLeft - speed);
+    if (Math.abs(x - startX) > 5) {
+      dragged = true;
+    }
+  });
+  $(document).on("touchend", function () {
+    if (!isDragging) return;
+    isDragging = false;
+
+    setTimeout(function () {
+      dragged = false;
+    }, 50);
+
+    let newScrollLeft = $slider.scrollLeft();
+    const scrollDistance = newScrollLeft - scrollLeft;
+    const liCount = Math.round(scrollDistance / liWidth);
+
+    newScrollLeft = scrollLeft + liCount * liWidth;
+    const maxScrollLeft =
+      liWidth * ($slider.find("li").length - visibleLiCount);
+
+    // 確保 newScrollLeft 在合理範圍內
+    if (newScrollLeft > maxScrollLeft) {
+      newScrollLeft = maxScrollLeft;
+    } else if (newScrollLeft < 0) {
+      newScrollLeft = 0;
+    }
+
+    $slider.animate({ scrollLeft: newScrollLeft }, 250);
   });
 
   ////////////// Scroll ////////////////
