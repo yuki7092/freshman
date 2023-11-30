@@ -1,6 +1,6 @@
 $(function () {
+  const currentWidth = $(window).width();
   function checkWidthAndApplyLogic() {
-    var currentWidth = $(window).width();
     if (currentWidth > 1180) {
       $("nav").addClass("fadeIn");
     } else {
@@ -36,13 +36,13 @@ $(function () {
   let currentSlideIndex = 0;
 
   function calculateVisibleLiCount() {
-    if (screenWidth <= 380) {
+    if (currentWidth <= 380) {
       return 1;
-    } else if (screenWidth <= 576) {
+    } else if (currentWidth <= 576) {
       return 2;
-    } else if (screenWidth <= 899) {
+    } else if (currentWidth <= 899) {
       return 3;
-    } else if (screenWidth <= 1180) {
+    } else if (currentWidth <= 1180) {
       return 4;
     } else {
       return 5;
