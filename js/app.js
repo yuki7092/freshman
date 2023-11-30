@@ -93,7 +93,6 @@ $(function () {
     const maxScrollLeft =
       liWidth * ($slider.find("li").length - visibleLiCount);
 
-    // 確保 newScrollLeft 在合理範圍內
     if (newScrollLeft > maxScrollLeft) {
       newScrollLeft = maxScrollLeft;
     } else if (newScrollLeft < 0) {
@@ -130,6 +129,7 @@ $(function () {
     startX = e.touches[0].pageX - $(this).offset().left;
     scrollLeft = $(this).scrollLeft();
   });
+
   $slider.on("touchmove", function (e) {
     if (!isDragging) return;
     e.preventDefault();
@@ -140,6 +140,7 @@ $(function () {
       dragged = true;
     }
   });
+
   $(document).on("touchend", function () {
     if (!isDragging) return;
     isDragging = false;
@@ -156,7 +157,6 @@ $(function () {
     const maxScrollLeft =
       liWidth * ($slider.find("li").length - visibleLiCount);
 
-    // 確保 newScrollLeft 在合理範圍內
     if (newScrollLeft > maxScrollLeft) {
       newScrollLeft = maxScrollLeft;
     } else if (newScrollLeft < 0) {
